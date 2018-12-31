@@ -32,22 +32,25 @@ app.get('/', (req, res) => {
   session = req.session;
   if(session.uniqueID){
     res.redirect('/redirects')
-  }
+  }else{
   res.sendFile(__dirname + '/index.html');
+}
 });
 app.get('/upload', (req, res) => {
 
 session = req.session;
   if(!session.uniqueID){
     res.end("Unauthorized access");
-  }
+  }else{
   res.sendFile(__dirname + '/upload.html');
+}
 });
 app.get('/karta', (req, res) => {
   if(!session.uniqueID){
     res.end("Unauthorized access");
-  }
+  }else{
   res.sendFile(__dirname + '/map.html');
+}
 });
 app.get('/main.js', (req, res) => {
   res.sendFile(__dirname + '/main.js');
@@ -65,8 +68,9 @@ app.get('/login', (req, res) => {
   session = req.session;
   if(session.uniqueID){
     res.redirect('/redirects')
-  }
+  }else{
   res.sendFile(__dirname + '/login.html');
+}
 });
 
 app.post('/login', function(req, res){
