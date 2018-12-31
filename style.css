@@ -1,0 +1,145 @@
+#mapid {
+width: 700px; height: 500px;
+}
+
+/*body {
+            padding: 0;
+            margin: 0;
+        }
+        
+ html, body, #mapid {
+            height: 100%;
+            width: 100%;
+        }*/
+
+        [type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #00f;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+/* Style.css */
+
+input{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 150px;
+    font-size: 15px;
+    transition-duration: 0.4s;
+}
+input:hover{
+    width: 200px;
+    border-bottom: 1px solid blue;
+}
+input:focus{
+    width: 200px;
+    border-bottom: 1px solid blue;
+}
+input[type=submit]{
+        transition-duration: 0.4s;
+    outline: none;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    background-color: white;
+    height: 50px;
+    width: 150px;
+    font-size: 15px;
+    font-family:verdana; 
+    cursor: pointer;
+}
+.ul{
+  overflow: hidden;
+  background-color: #333;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  height: 65px
+}
+
+.ul a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px 16px;
+  text-decoration: none;
+  font-size: 17px;
+    font-family: 'Karla';
+    float: right;
+    height: 65px;
+}
+
+.ul a:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.ul a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+#signin{
+    margin-top: 10%;
+    margin-left: 50%;
+    border-left: 5px solid black;
+    padding: 10px;
+    
+}
+#login{
+  position: absolute;
+  left: 45%;
+  margin-left: -50px; 
+  top: 35%;
+    border: 2px solid black;
+    padding: 30px;
+    width: 200px;
+}
+input[type=submit]:hover{
+  background-color: #4CAF50;
+  color: white;
+}
