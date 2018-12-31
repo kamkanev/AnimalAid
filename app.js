@@ -31,7 +31,7 @@ app.use(sessions({
 app.get('/', (req, res) => {
   session = req.session;
   if(session.uniqueID){
-    res.redirect('/redirects')
+    res.redirect(307, '/redirects')
   }
   res.sendFile(__dirname + '/index.html');
 });
@@ -64,7 +64,7 @@ app.get('/Style.css', (req, res) => {
 app.get('/login', (req, res) => {
   session = req.session;
   if(session.uniqueID){
-    res.redirect('/redirects')
+    res.redirect(307, '/redirects')
   }
   res.sendFile(__dirname + '/login.html');
 });
@@ -100,15 +100,15 @@ app.post('/signup', function(req, res){
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect(307, '/login');
 });
 
 app.get('/redirects', (req, res) => {
   session = req.session;
   if(session.uniqueID){
-    res.redirect('/karta');
+    res.redirect(307, '/karta');
   }else{
-    res.redirect('/login')
+    res.redirect(307, '/login');
     //res.send(req.session.uniqueID +' not found <a href="/logout">log off</a>');
   }
 });
