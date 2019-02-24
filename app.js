@@ -93,8 +93,9 @@ app.post('/login', function(req, res){
 app.post('/signup', function(req, res){
 
   for (var i = users.length - 1; i >= 0; i--) {
-    if(users[i].username == req.body.username){
+    if(users[i].username != req.body.username){
       //res.render('ViewMode', {data: req.body});
+      
     }
   }
   // console.log(req);

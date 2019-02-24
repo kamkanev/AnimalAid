@@ -1,18 +1,7 @@
 #mapid {
 width: 700px; height: 500px;
 }
-
-/*body {
-            padding: 0;
-            margin: 0;
-        }
-        
- html, body, #mapid {
-            height: 100%;
-            width: 100%;
-        }*/
-
-        [type="radio"]:checked,
+[type="radio"]:checked,
 [type="radio"]:not(:checked) {
     position: absolute;
     left: -9999px;
@@ -98,10 +87,27 @@ input[type=submit]{
   background-color: #333;
   margin-top: -10px;
   margin-left: -10px;
-  margin-right: -10px;
+  margin-right: -5px;
   height: 65px
+  
+}
+#mapid1{
+    position: absolute;
 }
 
+html, body, #mapid1 {
+    height: 100%;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: -10px;
+    margin-bottom: -10px;
+    margin-top: -0.5px;
+    clear: both;
+    display: inline-block;
+}
+html{
+    overflow-x: hidden;
+}
 .ul a {
   float: left;
   color: #f2f2f2;
@@ -109,16 +115,15 @@ input[type=submit]{
   padding: 20px 16px;
   text-decoration: none;
   font-size: 17px;
-    font-family: 'Karla';
-    float: right;
-    height: 65px;
+  font-family: Arial, Helvetica, sans-serif;
+  float: right;
+  height: 65px;
+  margin-top: 5px;        
 }
-
 .ul a:hover {
   background-color: #4CAF50;
   color: black;
 }
-
 .ul a.active {
   background-color: #4CAF50;
   color: white;
@@ -142,4 +147,8 @@ input[type=submit]{
 input[type=submit]:hover{
   background-color: #4CAF50;
   color: white;
+}
+input[type=file]{
+    color: #f1e5e6;
+    background-color: #d3394c;
 }
