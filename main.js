@@ -45,7 +45,7 @@ var mymap = L.map('mapid').setView([42.698334, 23.319941], 13);// 42 - lat, 23 -
     fillColor: '#f03',//vutre
     fillOpacity: 0.3,
     radius: sig[i].r
-}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+"</p> <a href='/checked'>Izpulni<a/>"));
+}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+" <a href='/checked'>Изпълни<a/> </p>"));
 //console.log(sig[i]);
 		}
 //console.log("1");
