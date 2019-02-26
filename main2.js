@@ -24,7 +24,7 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
     fillColor: '#f03',//vutre
     fillOpacity: 0.3,
     radius: sig.r
-}).bindPopup("<h2 style='color: blue;'>"+sig.name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig.file+"><p>"+sig.text+"</p><p>"+sig.koi+"</p>"));
+}).bindPopup("<h2 style='color: blue;'>"+sig.name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig.file+"><p>"+sig.text+"</p><p>"+sig.koi+" <a href='/checked'>Изпълни<a/> </p>"));
 //console.log(sig[i]);
 //console.log("1");
 	});
@@ -37,7 +37,7 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
     fillColor: '#f03',//vutre
     fillOpacity: 0.3,
     radius: sig[i].r
-}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+"</p>"));
+}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+" <a href='/checked'>Изпълни<a/> </p>"));
 //console.log(sig[i]);
 		}
 	});
