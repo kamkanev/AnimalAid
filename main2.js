@@ -10,12 +10,7 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
 	}).addTo(mymap);
 	
 	var popup = L.popup();
-	var markers = [
-	L.marker([42.698204, 23.343312]),
-	L.marker([42.698004, 23.343018]),
-	L.marker([42.699104, 23.343928]),
-	L.marker([42.697404, 23.344188])
-	], marker;
+	var markers = [], marker;
 
 	socket.on("signal", function(sig){
 		//markers = [];
