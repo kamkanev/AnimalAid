@@ -1,5 +1,5 @@
 var socket = io();
-var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 - lng
+var mymap = L.map('mapid').setView([42.698334, 23.319941], 13);// 42 - lat, 23 - lng
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia2FtY2hvMTEzIiwiYSI6ImNqcGd5ZmZtMjA0eG4zcXF3dHRlb3pmZHQifQ.s_z5folvJO7-ybvZqy0WvA', {
 		maxZoom: 18,
@@ -10,12 +10,7 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
 	}).addTo(mymap);
 	
 	var popup = L.popup();
-	var markers = [
-	L.marker([42.698204, 23.343312]),
-	L.marker([42.698004, 23.343018]),
-	L.marker([42.699104, 23.343928]),
-	L.marker([42.697404, 23.344188])
-	], marker;
+	var markers = [], marker;
 
 	socket.on("signal", function(sig){
 		//markers = [];
@@ -29,7 +24,7 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
 //console.log("1");
 	});
 
-		socket.on("delSignal", function(sig){
+	socket.on("delSignal", function(sig){
 		markers = [];
 		for (var i = sig.length - 1; i >= 0; i--) {
 			markers.push(L.circle([sig[i].coords.lat, sig[i].coords.lng], {
@@ -61,38 +56,45 @@ var mymap = L.map('mapid1').setView([42.698334, 23.319941], 13);// 42 - lat, 23 
 		document.getElementById('msg').style.display = 'block';
 	});
 
-function onMapClick(e) {
-	if(marker != undefined){
-		mymap.removeLayer(marker);
-		}
-        //marker = L.marker(e.latlng).addTo(mymap);
-        marker = L.circle(e.latlng, {
-    color: '#6EBE20',//otvun
-    fillColor: '#73D216',//vutre
-    fillOpacity: 0.3,
-    radius: parseInt(document.getElementById("mySelect").value)
-}).addTo(mymap);
-marker.bindPopup("<h2 style='color: blue;'>Kude sum???</h2>");
-document.getElementById('x').value = e.latlng.lat;
-document.getElementById('y').value = e.latlng.lng;
-        //markers.push(marker);
-}
+// function onMapClick(e) {
+// 	if(marker != undefined){
+// 		mymap.removeLayer(marker);
+// 		}
+//         //marker = L.marker(e.latlng).addTo(mymap);
+//         marker = L.circle(e.latlng, {
+//     color: '#6EBE20',//otvun
+//     fillColor: '#73D216',//vutre
+//     fillOpacity: 0.3,
+//     radius: parseInt(document.getElementById("mySelect").value)
+// }).addTo(mymap);
+// marker.bindPopup("<h2 style='color: blue;'>Kude sum???</h2>");
+// document.getElementById('x').value = e.latlng.lat;
+// document.getElementById('y').value = e.latlng.lng;
+//         //markers.push(marker);
+// }
 
-mymap.on('click', onMapClick);
+// mymap.on('click', onMapClick);
 
-function upImg() {
-	document.getElementById('file-to-upload').style.display = "block";
-}
+// function upImg() {
+// 	document.getElementById('file-to-upload').style.display = "block";
+// }
 
-function imgDis(){
-		document.getElementById('file-to-upload').style.display = "none";
+// function imgDis(){
+// 		document.getElementById('file-to-upload').style.display = "none";
+// }
+
+function circleClick(e){
+	var cc = e.target;
+		console.log(cc);
+	document.getElementById('x').value = cc._latlng.lat;
+	document.getElementById('y').value = cc._latlng.lng;
 }
 
 function update() {
 
 	
 	for(var i=0; i<markers.length; i++){
-			markers[i].addTo(mymap);
+			markers[i].addTo(mymap).on("click", circleClick);
 		}
 	
 }

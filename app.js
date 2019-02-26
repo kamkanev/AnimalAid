@@ -2,6 +2,7 @@ var express = require('express');
 var multer = require('multer');
 var bodyParser = require('body-parser');
 var sessions = require('express-session');
+var md5 = require('md5');
 var upload = multer({
   dest: 'uploads/' // this saves your file into a directory called "uploads"
 }); 
@@ -13,14 +14,15 @@ var session;
 
 var signali = [];
 var users = [
-{username: 'admin', password: 'admin'},
-{username: 'pesho', password: '1234'},
-{username: 'gosho', password: '01234'}
+{username: 'admin', password: md5('admin')},
+{username: 'admin2', password: md5('admin2')},
+{username: 'pesho', password: md5('1234')},
+{username: 'gosho', password: md5('01234')}
 ];
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 app.use(sessions({
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
@@ -36,6 +38,16 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 }
 });
+
+app.get('/checked', (req, res) => {
+  session = req.session;
+  if(!session.uniqueID){
+    res.end("Unauthorized access");
+  }else{
+  res.sendFile(__dirname + '/send.html');
+}
+});
+
 app.get('/upload', (req, res) => {
 
 session = req.session;
@@ -57,6 +69,9 @@ app.get('/main.js', (req, res) => {
 });
 app.get('/main2.js', (req, res) => {
   res.sendFile(__dirname + '/main2.js');
+});
+app.get('/main3.js', (req, res) => {
+  res.sendFile(__dirname + '/main3.js');
 });
 app.get('/style.css', (req, res) => {
   res.sendFile(__dirname + '/style.css');
@@ -81,7 +96,7 @@ app.post('/login', function(req, res){
   }
 
   for(var i=0; i<users.length; i++){
-    if(req.body.username == users[i].username && req.body.password == users[i].password){
+    if(req.body.username == users[i].username && md5(req.body.password) == users[i].password){
       session.uniqueID = req.body.username;
       //console.log(session.uniqueID , req.body);
    }
@@ -90,17 +105,63 @@ app.post('/login', function(req, res){
 
 });
 
-app.post('/signup', function(req, res){
+app.post('/checked', function(req, res){
 
+if(req.body.x == ''){
+	res.redirect('/checked');
+}else{
+//console.log(signali);
+	for (var i = signali.length - 1; i >= 0; i--) {
+		if(signali[i].coords.lat == req.body.x && signali[i].coords.lng == req.body.y){
+			//console.log(signali[i].coords.lat+' - '+req.body.x);
+				signali.splice(i, 1);
+		}
+	}
+	//console.log(req.body.x+' , '+req.body.y);
+	//console.log(signali);
+	io.emit("delSignal", signali);
+	res.redirect('/karta');
+
+}
+
+});
+
+app.post('/signup', function(req, res){
+	if(req.body.firstname != '' && req.body.lastname != '' && req.body.username != '' && req.body.email != '' && req.body.password != '' && req.body.confirmpassword != ''){
+
+var sign = true;
   for (var i = users.length - 1; i >= 0; i--) {
-    if(users[i].username != req.body.username){
+    if(users[i].username == req.body.username){
       //res.render('ViewMode', {data: req.body});
+      sign = false;
+      break;
+  }
+      if(users[i].email == req.body.email){
+      	signup = false;
+      	break;
+      }
       
-    }
+
   }
   // console.log(req);
-  res.redirect('/login');
+  if(sign && req.body.password == req.body.confirmpassword){
+  	users.push({username: req.body.username,
+  		name: req.body.firstname,
+  		familia: req.body.lastname,
+  		email: req.body.email,
+  		password: md5(req.body.password)
+  	});
 
+  res.redirect('/login');
+}else{
+
+	res.redirect('/');
+}
+//console.log(users);
+}else{
+
+	res.redirect('/');
+}
 });
 
 app.get('/logout', (req, res) => {
@@ -124,7 +185,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 // It's very crucial that the file name matches the name attribute in your html
 app.post('/upload', upload.single('file-to-upload'), (req, res) => {
 
-  if(req.body.x == ''){
+  if(req.body.x == '' && req.body.animal == '' && req.body.problem == ''){
     res.redirect('/upload');
 //     io.on('connection', function(socket){
 

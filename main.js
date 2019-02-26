@@ -10,12 +10,7 @@ var mymap = L.map('mapid').setView([42.698334, 23.319941], 13);// 42 - lat, 23 -
 	}).addTo(mymap);
 	
 	var popup = L.popup();
-	var markers = [
-	L.marker([42.698204, 23.343312]),
-	L.marker([42.698004, 23.343018]),
-	L.marker([42.699104, 23.343928]),
-	L.marker([42.697404, 23.344188])
-	], marker;
+	var markers = [], marker;
 
 	socket.on("signal", function(sig){
 		//markers = [];
@@ -24,9 +19,22 @@ var mymap = L.map('mapid').setView([42.698334, 23.319941], 13);// 42 - lat, 23 -
     fillColor: '#f03',//vutre
     fillOpacity: 0.3,
     radius: sig.r
-}).bindPopup("<h2 style='color: blue;'>"+sig.name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig.file+"><p>"+sig.text+"</p><p>"+sig.koi+"</p>"));
+}).bindPopup("<h2 style='color: blue;'>"+sig.name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig.file+"><p>"+sig.text+"</p><p>"+sig.koi+"</p> <a href='/checked'>Izpulni<a/>"));
 //console.log(sig[i]);
 //console.log("1");
+	});
+
+		socket.on("delSignal", function(sig){
+		markers = [];
+		for (var i = sig.length - 1; i >= 0; i--) {
+			markers.push(L.circle([sig[i].coords.lat, sig[i].coords.lng], {
+    color: 'red',//otvun
+    fillColor: '#f03',//vutre
+    fillOpacity: 0.3,
+    radius: sig[i].r
+}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+"</p>"));
+//console.log(sig[i]);
+		}
 	});
 
 	socket.on("signali", function(sig){
@@ -37,7 +45,7 @@ var mymap = L.map('mapid').setView([42.698334, 23.319941], 13);// 42 - lat, 23 -
     fillColor: '#f03',//vutre
     fillOpacity: 0.3,
     radius: sig[i].r
-}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+"</p>"));
+}).bindPopup("<h2 style='color: blue;'>"+sig[i].name+"</h2><img style='width: 100%; max-width: 400px; height: auto;' src="+sig[i].file+"><p>"+sig[i].text+"</p><p>"+sig[i].koi+"</p> <a href='/checked'>Izpulni<a/>"));
 //console.log(sig[i]);
 		}
 //console.log("1");
