@@ -152,3 +152,18 @@ input[type=file]{
     color: #f1e5e6;
     background-color: #d3394c;
 }
+#mapid{
+    position: absolute;
+    margin-left: 50%;
+    margin-top:-30%; 
+    height: 80%; 
+    width: 45%;
+}
+@media only screen and (max-width: 1720px) {
+  #mapid{
+    margin-top:-40%;
+  }
+}
+#logo {
+  float: left;
+}

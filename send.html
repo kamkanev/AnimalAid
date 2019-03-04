@@ -6,7 +6,7 @@
     <div class="ul">
             <a href="/logout">Изход</a>
             <a style="float: left;  margin-left: 5px;" href="/karta">Карта</a>
-            <a class="active"; style="float: left;" href="/upload">Подай сигнал</a>
+            <a style="float: left;" href="/upload">Подай сигнал</a>
         </div>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,21 +22,18 @@
 <body>
  <div style="margin-left: 12%; margin-top: 2%; overflow-x: hidden;">   
 <form action="/checked" enctype="application/json" method="post">
-	<label style="font-size: 25px;">Вид животно: <input style="font-size: 25px;" type="text" name="animal"></label>
-		<br/>
-        <br/>
-		<label style="font-size: 25px;">Проблем: <br><textarea style="resize: none; font-size: 20px;" rows="10" cols="30" name="problem"></textarea></label>
+		<label style="font-size: 25px;">Как помогнахте: <br><textarea style="resize: none; font-size: 20px;" rows="10" cols="30" name="problem"></textarea></label>
 
       <input type="hidden" id="x" name="x">
       <input type="hidden" id="y" name="y">
   <br/>
   <br/>
-      <input type="submit" value="Качи">
+      <input type="submit" value="Изпълни">
     </form> 
         <br/>
     </div>    
 
-<div style="position: absolute; margin-left: 50%; margin-top: -40%; height: 80%; width: 45%;" id="mapid"></div>
+<div style="margin-top: -22%;" id="mapid"></div>
 <script src="main3.js"></script>
 </body>
 </html>
