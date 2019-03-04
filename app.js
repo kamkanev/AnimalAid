@@ -3,6 +3,10 @@ var multer = require('multer');
 var bodyParser = require('body-parser');
 var sessions = require('express-session');
 var md5 = require('md5');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
+var MailListener = require("mail-listener-fixed");
+
 var upload = multer({
   dest: 'uploads/' // this saves your file into a directory called "uploads"
 }); 
@@ -14,8 +18,8 @@ var session;
 
 var signali = [];
 var users = [
-{username: 'admin', password: md5('admin')},
-{username: 'admin2', password: md5('admin2')},
+{username: 'admin', email: 'kamkanev@gmail.com', password: md5('admin')},
+{username: 'admin2', email: 'burborko2@abv.bg', password: md5('admin2')},
 {username: 'pesho', password: md5('1234')},
 {username: 'gosho', password: md5('01234')}
 ];
@@ -137,7 +141,7 @@ var sign = true;
       break;
   }
       if(users[i].email == req.body.email){
-      	signup = false;
+      	sign = false;
       	break;
       }
       
@@ -151,7 +155,13 @@ var sign = true;
   		email: req.body.email,
   		password: md5(req.body.password)
   	});
-
+    var msg = {
+      to: ''+req.body.email+'',
+      from: 'DevTeam@animalaid.com',
+      subject: 'Регистрация AnimalAid',
+      templateId: 'd-aa9cafe984ab45398a96b76c9435be8c',
+    };
+    sgMail.send(msg);
   res.redirect('/login');
 }else{
 
