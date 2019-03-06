@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var sessions = require('express-session');
 var md5 = require('md5');
 const sgMail = require('@sendgrid/mail');
-const AerospikeStore = require('aerospike-session-store')(sessions);
+var MemoryStore = require('memorystore')(sessions)
 sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
 var MailListener = require("mail-listener-fixed");
 
@@ -31,14 +31,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(sessions({
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
-  store: new AerospikeStore({
-    namespace: 'express',
-    set: 'session',
-    ttl: 86400, // 1 day
-    hosts: process.env.PORT
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
   }),
   resave: false,
   saveUninitialized: false
+
 }));
 
 app.get('/', (req, res) => {
