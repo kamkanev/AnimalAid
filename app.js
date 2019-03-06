@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var sessions = require('express-session');
 var md5 = require('md5');
 const sgMail = require('@sendgrid/mail');
+var MemoryStore = require('memorystore')(sessions)
 sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
 var MailListener = require("mail-listener-fixed");
 
@@ -31,7 +32,10 @@ app.use(bodyParser.urlencoded({
 app.use(sessions({
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  })
 }));
 
 app.get('/', (req, res) => {
