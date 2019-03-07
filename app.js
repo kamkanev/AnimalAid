@@ -32,16 +32,25 @@ app.use(bodyParser.urlencoded({
 app.use(sessions({
   // store: new (require('connect-pg-simple')(sessions))(),
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
-  store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
-  }),
+  // store: new MemoryStore({
+  //   checkPeriod: 86400000 // prune expired entries every 24h
+  // }),
   resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+  saveUninitialized: false
+  //cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 
 }));
 
 app.get('/', (req, res) => {
+  session = req.session;
+  if(session.uniqueID){
+    res.redirect('/redirects')
+  }else{
+  res.sendFile(__dirname + '/map2.html');
+}
+});
+
+app.get('/signUp', (req, res) => {
   session = req.session;
   if(session.uniqueID){
     res.redirect('/redirects')
@@ -52,28 +61,34 @@ app.get('/', (req, res) => {
 
 app.get('/checked', (req, res) => {
   session = req.session;
-  if(!session.uniqueID){
-    res.end("Unauthorized access");
-  }else{
+  
+   if(session.uniqueID){
   res.sendFile(__dirname + '/send.html');
+}else{
+  res.sendFile(__dirname + '/send2.html');
 }
+
 });
 
 app.get('/upload', (req, res) => {
 
 session = req.session;
-  if(!session.uniqueID){
-    res.end("Unauthorized access");
-  }else{
+ if(session.uniqueID){
   res.sendFile(__dirname + '/upload.html');
+}else{
+  res.sendFile(__dirname + '/upload2.html');
 }
+  
+
 });
 app.get('/karta', (req, res) => {
-  if(!session.uniqueID){
-    res.end("Unauthorized access");
-  }else{
+session = req.session;
+  if(session.uniqueID){
   res.sendFile(__dirname + '/map.html');
+}else{
+  res.redirect('/redirects2');
 }
+
 });
 app.get('/main.js', (req, res) => {
   res.sendFile(__dirname + '/main.js');
@@ -131,7 +146,7 @@ if(req.body.x == ''){
 	//console.log(req.body.x+' , '+req.body.y);
 	//console.log(signali);
 	io.emit("delSignal", signali);
-	res.redirect('/karta');
+	res.redirect('/redirects2');
 
 }
 
@@ -172,18 +187,18 @@ var sign = true;
   res.redirect('/login');
 }else{
 
-	res.redirect('/');
+	res.redirect('/signUp');
 }
 //console.log(users);
 }else{
 
-	res.redirect('/');
+	res.redirect('/signUp');
 }
 });
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/redirects', (req, res) => {
@@ -192,6 +207,15 @@ app.get('/redirects', (req, res) => {
     res.redirect('/karta');
   }else{
     res.redirect('/login');
+    //res.send(req.session.uniqueID +' not found <a href="/logout">log off</a>');
+  }
+});
+app.get('/redirects2', (req, res) => {
+  session = req.session;
+  if(session.uniqueID){
+    res.redirect('/karta');
+  }else{
+    res.redirect('/');
     //res.send(req.session.uniqueID +' not found <a href="/logout">log off</a>');
   }
 });
@@ -210,10 +234,14 @@ app.post('/upload', upload.single('file-to-upload'), (req, res) => {
   
 // });
   }else{
-  res.redirect('/karta');
+    var kkoi = req.session.uniqueID;
+    if(!kkoi){
+        kkoi = "guest";
+    }
+  res.redirect('/redirects2');
   if(req.file == undefined){
     signali.push({
-      koi: req.session.uniqueID,
+      koi: kkoi,
     name: req.body.animal,
     file: "/uploads/dog-paw.jpg",
     coords: {lat: req.body.x, lng: req.body.y}, // още статове за кръга
@@ -223,7 +251,7 @@ app.post('/upload', upload.single('file-to-upload'), (req, res) => {
     console.log("loading default image");
   }else{
   signali.push({
-    koi: req.session.uniqueID,
+    koi: kkoi,
   	name: req.body.animal,
   	file: req.file.path,
   	coords: {lat: req.body.x, lng: req.body.y}, // още статове за кръга

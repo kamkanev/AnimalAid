@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html style="overflow-y: hidden;">
+<head>
+	<title>Animal Aid</title>
+<link rel="stylesheet" type="text/css" href="style.css">    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+    <script src="socket.io/socket.io.js"></script>
+</head>
+<body>
+<div class="ul">
+  <a href="/signUp">Регистрирай се</a>
+  <a href="/login">Влез</a>
+  <a class="active" style="float: left;  margin-left: 5px;" href="/">Карта</a>
+  <a style="float: left; margin-left: 0px;" href="/upload">Подай сигнал</a> 
+  <a style="float: left; margin-left: 0px;" href="/checked">Изпълни сигнал</a>
+</div>
+<div id="mapid1"></div>
+<script src="main2.js"></script>
+
+</body>
+</html>
