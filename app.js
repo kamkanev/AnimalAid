@@ -32,9 +32,9 @@ app.use(bodyParser.urlencoded({
 app.use(sessions({
   // store: new (require('connect-pg-simple')(sessions))(),
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
-  // store: new MemoryStore({
-  //   checkPeriod: 86400000 // prune expired entries every 24h
-  // }),
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
   resave: false,
   saveUninitialized: false
   //cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
