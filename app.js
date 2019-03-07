@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var sessions = require('express-session');
 var md5 = require('md5');
 const sgMail = require('@sendgrid/mail');
-//var MemoryStore = require('memorystore')(sessions)
+var MemoryStore = require('memorystore')(sessions)
 sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
 var MailListener = require("mail-listener-fixed");
 
@@ -30,11 +30,11 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(sessions({
-  store: new (require('connect-pg-simple')(sessions))(),
+  // store: new (require('connect-pg-simple')(sessions))(),
   secret: '^%^RTfgVuyigYReT%&^$#%*&Rd',
-  // store: new MemoryStore({
-  //   checkPeriod: 86400000 // prune expired entries every 24h
-  // }),
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
