@@ -8,6 +8,24 @@ var MemoryStore = require('memorystore')(sessions)
 sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
 var MailListener = require("mail-listener-fixed");
 
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
+
+client.query('SELECT * FROM Signali;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    // console.log(JSON.stringify(row));
+    console.log(row);
+  }
+  client.end();
+});
+
 var upload = multer({
   dest: 'uploads/' // this saves your file into a directory called "uploads"
 }); 
