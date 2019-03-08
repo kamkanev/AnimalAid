@@ -166,7 +166,7 @@ if(req.body.x == ''){
       templateId: 'd-85924080c3694013908c86b451bacd94',
       dynamic_template_data: {
     animal: ''+signali[i].name+'',
-    problem: ''signali[i].text'',
+    problem: ''+signali[i].text+'',
     person: ''+req.session.uniqueID+'',
   },
     };
