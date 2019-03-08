@@ -267,17 +267,16 @@ app.post('/upload', upload.single('file-to-upload'), (req, res) => {
     text: req.body.problem
   });
     console.log("loading default image");
-    console.log(req.body);
-//     client.connect();
+    client.connect();
 
-// client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ('+req.body.x+', '+req.body.y+', '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "/uploads/dog-paw.jpg", "'+kkoi+'")', (err, res) => {
-//   if (err) throw err;
-//   // for (let row of res.rows) {
-//   //   // console.log(JSON.stringify(row));
-//      //console.log(res.rows);
-//   // }
-//   client.end();
-// });
+client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "/uploads/dog-paw.jpg", "'+kkoi+'")', (err, res) => {
+  if (err) throw err;
+  // for (let row of res.rows) {
+  //   // console.log(JSON.stringify(row));
+     //console.log(res.rows);
+  // }
+  client.end();
+});
   }else{
   signali.push({
     koi: kkoi,
@@ -287,7 +286,7 @@ app.post('/upload', upload.single('file-to-upload'), (req, res) => {
     r: parseInt(req.body.rad),
   	text: req.body.problem
   });
-  client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ('+req.body.x+', '+req.body.y+', '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "'+req.file.path+'", "'+kkoi+'")', (err, res) => {
+  client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "'+req.file.path+'", "'+kkoi+'")', (err, res) => {
   if (err) throw err;
   // for (let row of res.rows) {
   //   // console.log(JSON.stringify(row));
