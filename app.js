@@ -19,10 +19,10 @@ client.connect();
 
 client.query('SELECT * FROM Signali;', (err, res) => {
   if (err) throw err;
-  for (let row of res.rows) {
-    // console.log(JSON.stringify(row));
-    console.log(row);
-  }
+  // for (let row of res.rows) {
+  //   // console.log(JSON.stringify(row));
+     console.log(res.rows);
+  // }
   client.end();
 });
 
