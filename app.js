@@ -8,23 +8,23 @@ var MemoryStore = require('memorystore')(sessions)
 sgMail.setApiKey("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");//process.env.SENDGRID_API_KEY);
 var MailListener = require("mail-listener-fixed");
 
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true,
+// });
 
-client.connect();
+// client.connect();
 
-client.query('SELECT * FROM Signali;', (err, res) => {
-  if (err) throw err;
-  // for (let row of res.rows) {
-  //   // console.log(JSON.stringify(row));
-     console.log(res.rows);
-  // }
-  client.end();
-});
+// client.query('SELECT * FROM Signali;', (err, res) => {
+//   if (err) throw err;
+//   // for (let row of res.rows) {
+//   //   // console.log(JSON.stringify(row));
+//      console.log(res.rows);
+//   // }
+//   client.end();
+// });
 
 var upload = multer({
   dest: 'uploads/' // this saves your file into a directory called "uploads"
@@ -150,7 +150,6 @@ app.post('/login', function(req, res){
 });
 
 app.post('/checked', function(req, res){
-
 if(req.body.x == ''){
 	res.redirect('/checked');
 }else{
@@ -158,7 +157,25 @@ if(req.body.x == ''){
 	for (var i = signali.length - 1; i >= 0; i--) {
 		if(signali[i].coords.lat == req.body.x && signali[i].coords.lng == req.body.y){
 			//console.log(signali[i].coords.lat+' - '+req.body.x);
+      for(var j = 0; j<users.length; j++){
+        if(signali[i].koi == users[j].username && users[j].username != 'guest'){
+            var msg = {
+      to: ''+users[j].email+'',
+      from: 'SuportTeam@animalaid.com',
+      subject: 'Изпълнен сигнал',
+      templateId: 'd-85924080c3694013908c86b451bacd94',
+      dynamic_template_data: {
+    animal: ''+signali[i].name+'',
+    problem: ''signali[i].text'',
+    person: ''+req.session.uniqueID+'',
+  },
+    };
+    sgMail.send(msg);
+    break;
+        }
+      }
 				signali.splice(i, 1);
+      
 		}
 	}
 	//console.log(req.body.x+' , '+req.body.y);
@@ -267,16 +284,16 @@ app.post('/upload', upload.single('file-to-upload'), (req, res) => {
     text: req.body.problem
   });
     console.log("loading default image");
-    client.connect();
+//     client.connect();
 
-client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "/uploads/dog-paw.jpg", "'+kkoi+'")', (err, res) => {
-  if (err) throw err;
-  // for (let row of res.rows) {
-  //   // console.log(JSON.stringify(row));
-     //console.log(res.rows);
-  // }
-  client.end();
-});
+// client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "/uploads/dog-paw.jpg", "'+kkoi+'")', (err, res) => {
+//   if (err) throw err;
+//   // for (let row of res.rows) {
+//   //   // console.log(JSON.stringify(row));
+//      //console.log(res.rows);
+//   // }
+//   client.end();
+// });
   }else{
   signali.push({
     koi: kkoi,
@@ -286,15 +303,15 @@ client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req
     r: parseInt(req.body.rad),
   	text: req.body.problem
   });
-  client.connect();
-  client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "'+req.file.path+'", "'+kkoi+'")', (err, res) => {
-  if (err) throw err;
-  // for (let row of res.rows) {
-  //   // console.log(JSON.stringify(row));
-     //console.log(res.rows);
-  // }
-  client.end();
-});
+//   client.connect();
+//   client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "'+req.file.path+'", "'+kkoi+'")', (err, res) => {
+//   if (err) throw err;
+//   // for (let row of res.rows) {
+//   //   // console.log(JSON.stringify(row));
+//      //console.log(res.rows);
+//   // }
+//   client.end();
+// });
   
 }
 //console.log(signali);
