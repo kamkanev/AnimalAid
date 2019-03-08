@@ -286,6 +286,7 @@ client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req
     r: parseInt(req.body.rad),
   	text: req.body.problem
   });
+  client.connect();
   client.query('INSERT INTO Signali (X, Y, R, Title, Des, Pic, Koi) VALUES ("'+req.body.x+'", "'+req.body.y+'", '+parseInt(req.body.rad)+', "'+req.body.animal+'", "'+req.body.problem+'", "'+req.file.path+'", "'+kkoi+'")', (err, res) => {
   if (err) throw err;
   // for (let row of res.rows) {
